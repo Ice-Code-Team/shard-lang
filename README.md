@@ -8,8 +8,8 @@ Its syntax is a mix of mutiple other languages, trying to keep the best of each 
 
 ## Roadmap
 
-- [ ] File-based compiler
-- [ ] Console-based compiler
+- [ ] File-based input (for interpreter)
+- [ ] Console-based input (for interpreter)
 - [ ] Variables
 - [ ] Constants
 - [ ] Pointers
@@ -18,4 +18,4 @@ Its syntax is a mix of mutiple other languages, trying to keep the best of each 
 - [ ] Basic Input/Output System
 - [ ] Directory/Files System
 - [ ] If, elsif and else statements
-- [ ] Loops (for, while, dowhile)
+- [ ] Loops (for, while, do while)
