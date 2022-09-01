@@ -6,7 +6,7 @@ Shard is an interpreted, general purpose, based on C++ programming language deve
 
 Its syntax is a mix of mutiple other languages, trying to keep the best of each of them.
 
-You can find its documentation [here](https://github.com/Ice-Code-Team/shard-lang/docs.md).
+You can find its documentation [here](https://github.com/Ice-Code-Team/shard-lang/blob/main/docs.md).
 
 ## Roadmap
 
