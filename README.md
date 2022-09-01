@@ -9,7 +9,7 @@ Its syntax is a mix of mutiple other languages, trying to keep the best of each 
 ## Roadmap
 
 - [ ] File-based input (for interpreter)
-- [ ] Console-based input (for interpreter)
+- [x] Console-based input (for interpreter)
 - [ ] Variables
 - [ ] Constants
 - [ ] Pointers
