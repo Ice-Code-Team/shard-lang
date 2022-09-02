@@ -134,5 +134,6 @@ std::vector<std::string> split(std::string string_to_split, std::string delimite
             index = delimiter_index + delimiter.size();
         }
     }
+    std::string* final_string = &splitted_string[0];
     return splitted_string;
 }
