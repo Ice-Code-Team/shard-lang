@@ -7,62 +7,90 @@
 typedef enum TokenTypes {
     // Single delims (DELIM) ----------------------------------------------------------------
 
-    PAREN_DELIM_OPEN,
-    PAREN_DELIM_CLOSE,
-    STR_DELIM,
-    INDEX_DELIM_OPEN,
-    INDEX_DELIM_CLOSE,
-    FUNCTION_DELIM_OPEN,
-    FUNCTION_DELIM_CLOSE,
+    TT_PAREN_OPEN_DELIM,
+    TT_PAREN_CLOSE_DELIM,
+    TT_STR_DELIM,
+    TT_CHR_DELIM,
+    TT_INDEX_OPEN_DELIM,
+    TT_INDEX_CLOSE_DELIM,
+    TT_FUNCTION_OPEN_DELIM,
+    TT_FUNCTION_CLOSE_DELIM,
 
     // Multiple chars delims (DELIM) ----------------------------------------------------------------
 
-    COMMENT_DELIM_OPEN,
-    COMMENT_DELIM_CLOSE,
+    TT_COMMENT_OPEN_DELIM,
+    TT_COMMENT_CLOSE_DELIM,
 
     // Single char no-close (SYM) ----------------------------------------------------------------
 
-    PTR_SYM,
-    EOL_SYM,
+    TT_PTR_SYM,
+    TT_EOL_SYM,
 
     // Multiple chars types (TYP / WRD) ----------------------------------------------------------------
-
-    INT_TYP,
-    DOUBLE_TYP,
-    STR_TYP,
-    BOOL_TYP,
-    CHR_TYP,
-    CONST_WRD,
+    
+    TT_INT_TYP,
+    TT_DOUBLE_TYP,
+    TT_STR_TYP,
+    TT_BOOL_TYP,
+    TT_CHR_TYP,
+    TT_CONST_TYP,
 
     // Single char symbols (SYM) ----------------------------------------------------------------
 
-    GREATER_SYM,
-    LESS_SYM,
+    TT_GREATER_SYM,
+    TT_LESS_SYM,
 
     // Multiple chars symbols (SYM) ----------------------------------------------------------------
 
-    IS_EQUAL_SYM,
-    ASSIGN_SYM,
-    GREATER_OR_EQU_SYM,
-    LESS_OR_EQU_SYM,
+    TT_IS_EQUAL_SYM,
+    TT_ASSIGN_SYM,
+    TT_GREATER_OR_EQU_SYM,
+    TT_LESS_OR_EQU_SYM,
 
     // Statements (STMT) ----------------------------------------------------------------
 
-    IF_STMT,
-    ELSEIF_STMT,
-    ELSE_STMT,
-    DO_STMT,
-    WHILE_STMT,
-    FOR_STMT
+    TT_IF_STMT,
+    TT_ELSEIF_STMT,
+    TT_ELSE_STMT,
+    TT_DO_STMT,
+    TT_WHILE_STMT,
+    TT_FOR_STMT,
+
+    // Operators (OP) ----------------------------------------------------------------
+
+    TT_PLUS_OP,
+    TT_MINUS_OP,
+    TT_TIMES_OP,
+    TT_DIV_OP,
+
+    // Others
+    TT_NAME_OTH,
+    TT_VALUE_OTH
 } TokenType;
 
 // Content lists ----------------------------------------------------------------
 
 // List of all tokens types (matches the enum content)
-TokenType token_types_list[] = { PAREN_DELIM_OPEN, PAREN_DELIM_CLOSE, STR_DELIM, INDEX_DELIM_OPEN, INDEX_DELIM_CLOSE, FUNCTION_DELIM_OPEN, FUNCTION_DELIM_CLOSE, COMMENT_DELIM_OPEN, COMMENT_DELIM_CLOSE, PTR_SYM, EOL_SYM, INT_TYP, DOUBLE_TYP, STR_TYP, BOOL_TYP, CHR_TYP, CONST_WRD, GREATER_SYM, LESS_SYM, IS_EQUAL_SYM, ASSIGN_SYM, GREATER_OR_EQU_SYM, LESS_OR_EQU_SYM, IF_STMT, ELSEIF_STMT, ELSE_STMT, DO_STMT, WHILE_STMT, FOR_STMT};
+TokenType token_types_list[] = { 
+  TT_PAREN_OPEN_DELIM, TT_PAREN_CLOSE_DELIM, TT_STR_DELIM, TT_CHR_DELIM, TT_INDEX_OPEN_DELIM, TT_INDEX_CLOSE_DELIM, TT_FUNCTION_OPEN_DELIM, TT_FUNCTION_CLOSE_DELIM, TT_COMMENT_OPEN_DELIM, TT_COMMENT_CLOSE_DELIM, 
+  TT_PTR_SYM, TT_EOL_SYM, 
+  TT_INT_TYP, TT_DOUBLE_TYP, TT_STR_TYP, TT_BOOL_TYP, TT_CHR_TYP, TT_CONST_TYP,
+  TT_GREATER_SYM, TT_LESS_SYM, TT_IS_EQUAL_SYM, TT_ASSIGN_SYM, TT_GREATER_OR_EQU_SYM, TT_LESS_OR_EQU_SYM, 
+  TT_IF_STMT, TT_ELSEIF_STMT, TT_ELSE_STMT, TT_DO_STMT, TT_WHILE_STMT, TT_FOR_STMT,
+  TT_PLUS_OP, TT_MINUS_OP, TT_TIMES_OP, TT_DIV_OP,
+  TT_NAME_OTH, TT_VALUE_OTH
+};
 
 // List of all tokens
-std::string tokens_list[] = {"(", ")", "\"", "[", "]", "{", "}", "/*", "*/", ".", ";", "int", "double", "str", "bool", "chr", "const", ">", "<", "==", "<<", ">=", "<=", "if", "elseif", "else", "do", "while", "for"};
+std::string tokens_list[] = {
+  "(", ")", "\"", "'", "[", "]", "{", "}", "/*", "*/",
+  ".", ";",
+  "int", "double", "str", "bool", "chr", "const", 
+  ">", "<", "==", "<<", ">=", "<=", 
+  "if", "elseif", "else", "do", "while", "for",
+  "+", "-", "*", "/",
+  "", ""
+};
 
 // Function prototypes ----------------------------------------------------------------
 
@@ -88,12 +116,6 @@ int main()
     PrintTokens();
     return 0;
 }
-/*
-    tokens = {
-        "type": ...
-        "value": ...
-    }
-*/
 
 // Functions bodies ----------------------------------------------------------------
 
