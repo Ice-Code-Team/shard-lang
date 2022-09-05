@@ -63,9 +63,9 @@ typedef enum TokenTypes {
     TT_TIMES_OP,
     TT_DIV_OP,
 
-    // Others
-    TT_NAME_OTH,
-    TT_VALUE_OTH
+    // Digits
+    TT_CHAR_DGT,
+    TT_NUM_DGT
 } TokenType;
 
 // Content lists ----------------------------------------------------------------
@@ -78,7 +78,7 @@ TokenType token_types_list[] = {
   TT_GREATER_SYM, TT_LESS_SYM, TT_IS_EQUAL_SYM, TT_ASSIGN_SYM, TT_GREATER_OR_EQU_SYM, TT_LESS_OR_EQU_SYM, 
   TT_IF_STMT, TT_ELSEIF_STMT, TT_ELSE_STMT, TT_DO_STMT, TT_WHILE_STMT, TT_FOR_STMT,
   TT_PLUS_OP, TT_MINUS_OP, TT_TIMES_OP, TT_DIV_OP,
-  TT_NAME_OTH, TT_VALUE_OTH
+  TT_CHAR_DGT, TT_NUM_DGT
 };
 
 // List of all tokens
@@ -91,6 +91,10 @@ std::string tokens_list[] = {
   "+", "-", "*", "/",
   "", ""
 };
+
+// Token Combinations ----------------------------------------------------------------
+
+// Math
 
 // Function prototypes ----------------------------------------------------------------
 
