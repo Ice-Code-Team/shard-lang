@@ -68,6 +68,82 @@ typedef enum TokenTypes {
     TT_NUM_DGT
 } TokenType;
 
+// Type (enum) of all single char token types
+typedef enum SingleCharTokenTypes {
+    // Single delims (DELIM) ----------------------------------------------------------------
+
+    STT_PAREN_OPEN_DELIM,
+    STT_PAREN_CLOSE_DELIM,
+    STT_STR_DELIM,
+    STT_CHR_DELIM,
+    STT_INDEX_OPEN_DELIM,
+    STT_INDEX_CLOSE_DELIM,
+    STT_FUNCTION_OPEN_DELIM,
+    STT_FUNCTION_CLOSE_DELIM,
+
+    // Single char no-close (SYM) ----------------------------------------------------------------
+
+    STT_PTR_SYM,
+    STT_EOL_SYM,
+
+    // Single char symbols (SYM) ----------------------------------------------------------------
+
+    STT_GREATER_SYM,
+    STT_LESS_SYM,
+    STT_FOR_STMT,
+
+    // Operators (OP) ----------------------------------------------------------------
+
+    STT_PLUS_OP,
+    STT_MINUS_OP,
+    STT_TIMES_OP,
+    STT_DIV_OP
+} SingleCharTokenType;
+
+// Type (enum) of all multiple chars token types
+typedef enum TokenTypes {
+    // Multiple chars delims (DELIM) ----------------------------------------------------------------
+
+    TT_COMMENT_OPEN_DELIM,
+    TT_COMMENT_CLOSE_DELIM,
+
+    // Multiple chars types (TYP / WRD) ----------------------------------------------------------------
+    
+    TT_INT_TYP,
+    TT_DOUBLE_TYP,
+    TT_STR_TYP,
+    TT_BOOL_TYP,
+    TT_CHR_TYP,
+    TT_CONST_TYP,
+
+    // Multiple chars symbols (SYM) ----------------------------------------------------------------
+
+    TT_IS_EQUAL_SYM,
+    TT_ASSIGN_SYM,
+    TT_GREATER_OR_EQU_SYM,
+    TT_LESS_OR_EQU_SYM,
+
+    // Statements (STMT) ----------------------------------------------------------------
+
+    TT_IF_STMT,
+    TT_ELSEIF_STMT,
+    TT_ELSE_STMT,
+    TT_DO_STMT,
+    TT_WHILE_STMT,
+    TT_FOR_STMT,
+
+    // Operators (OP) ----------------------------------------------------------------
+
+    TT_PLUS_OP,
+    TT_MINUS_OP,
+    TT_TIMES_OP,
+    TT_DIV_OP,
+
+    // Digits
+    TT_CHAR_DGT,
+    TT_NUM_DGT
+} TokenType;
+
 // Content lists ----------------------------------------------------------------
 
 // List of all tokens types (matches the enum content)
@@ -92,9 +168,56 @@ std::string tokens_list[] = {
   "", ""
 };
 
+class Token {
+    public:
+        Token(std::string code) {
+            std::vector line_chunks = split(code_to_tokenize, ';');
+
+            code_to_tokenize = code;
+            index = 0;
+        }
+
+        void setIndex(int value) {
+            index = value;
+        }
+
+        int getIndex() {
+            return index;
+        }
+
+        TokenType getType() {
+            
+        }
+
+        char getValue() {
+            
+        }
+
+    private:
+        std::string code_to_tokenize;
+        int index;
+        TokenType type;
+        char value;
+};
+
 // Token Combinations ----------------------------------------------------------------
 
-// Math
+// Math --------------------------------
+
+class Add
+{
+    public:
+        Add(std::string num1, std::string num2) {
+            operato = '+';
+            delimiter = ',';
+        }
+    private:
+        char operato;
+        char delimiter;
+        int num1, dec1;
+        int num2, dec2;
+
+};
 
 // Function prototypes ----------------------------------------------------------------
 
@@ -104,8 +227,12 @@ void InsertToken(TokenType token_type, std::string token);
 void InsertAllTokens();
 // Prints all tokens in token_match map
 void PrintTokens();
-// Splits a string into a vector of strings with a defined delimiter
+// Tokenize and go along the code
+void TokenizeCode(std::string code);
+// Splits a string into a vector of strings with a defined string delimiter
 std::vector<std::string> split(std::string string_to_split, std::string delimiter);
+// Splits a string into a vector of strings with a defined char delimiter
+std::vector<std::string> split(std::string string_to_split, char delimiter);
 
 // Main variables declaration ----------------------------------------------------------------
 
@@ -144,7 +271,11 @@ void PrintTokens() {
     }
 }
 
-// split
+void TokenizeCode(std::string code) {
+    std::vector<TokenType> code_tokens;
+}
+
+// split with string
 std::vector<std::string> split(std::string string_to_split, std::string delimiter) {
     std::vector<std::string> splitted_string;
     int index = 0;
@@ -161,5 +292,19 @@ std::vector<std::string> split(std::string string_to_split, std::string delimite
         }
     }
     std::string* final_string = &splitted_string[0];
+    return splitted_string;
+}
+
+// split with char
+std::vector<std::string> split(std::string string_to_split, char delimiter) {
+    std::vector<std::string> splitted_string;
+    int index = 0;
+    for(int i = 0; i < string_to_split.length(); i++) {
+        if(string_to_split[i] == delimiter) {
+            index += 1;
+            continue;
+        }
+        splitted_string[index] += string_to_split[i];
+    }
     return splitted_string;
 }
