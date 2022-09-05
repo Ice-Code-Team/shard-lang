@@ -3,70 +3,7 @@
 #include <vector>
 #include <map>
 
-// Type (enum) of all token types
-typedef enum TokenTypes {
-    // Single delims (DELIM) ----------------------------------------------------------------
-
-    TT_PAREN_OPEN_DELIM,
-    TT_PAREN_CLOSE_DELIM,
-    TT_STR_DELIM,
-    TT_CHR_DELIM,
-    TT_INDEX_OPEN_DELIM,
-    TT_INDEX_CLOSE_DELIM,
-    TT_FUNCTION_OPEN_DELIM,
-    TT_FUNCTION_CLOSE_DELIM,
-
-    // Multiple chars delims (DELIM) ----------------------------------------------------------------
-
-    TT_COMMENT_OPEN_DELIM,
-    TT_COMMENT_CLOSE_DELIM,
-
-    // Single char no-close (SYM) ----------------------------------------------------------------
-
-    TT_PTR_SYM,
-    TT_EOL_SYM,
-
-    // Multiple chars types (TYP / WRD) ----------------------------------------------------------------
-    
-    TT_INT_TYP,
-    TT_DOUBLE_TYP,
-    TT_STR_TYP,
-    TT_BOOL_TYP,
-    TT_CHR_TYP,
-    TT_CONST_TYP,
-
-    // Single char symbols (SYM) ----------------------------------------------------------------
-
-    TT_GREATER_SYM,
-    TT_LESS_SYM,
-
-    // Multiple chars symbols (SYM) ----------------------------------------------------------------
-
-    TT_IS_EQUAL_SYM,
-    TT_ASSIGN_SYM,
-    TT_GREATER_OR_EQU_SYM,
-    TT_LESS_OR_EQU_SYM,
-
-    // Statements (STMT) ----------------------------------------------------------------
-
-    TT_IF_STMT,
-    TT_ELSEIF_STMT,
-    TT_ELSE_STMT,
-    TT_DO_STMT,
-    TT_WHILE_STMT,
-    TT_FOR_STMT,
-
-    // Operators (OP) ----------------------------------------------------------------
-
-    TT_PLUS_OP,
-    TT_MINUS_OP,
-    TT_TIMES_OP,
-    TT_DIV_OP,
-
-    // Digits
-    TT_CHAR_DGT,
-    TT_NUM_DGT
-} TokenType;
+// Types (enums) of all token types
 
 // Type (enum) of all single char token types
 typedef enum SingleCharTokenTypes {
@@ -101,73 +38,127 @@ typedef enum SingleCharTokenTypes {
 } SingleCharTokenType;
 
 // Type (enum) of all multiple chars token types
-typedef enum TokenTypes {
+typedef enum MultipleCharsTokenTypes {
     // Multiple chars delims (DELIM) ----------------------------------------------------------------
 
-    TT_COMMENT_OPEN_DELIM,
-    TT_COMMENT_CLOSE_DELIM,
+    MTT_COMMENT_OPEN_DELIM,
+    MTT_COMMENT_CLOSE_DELIM,
 
     // Multiple chars types (TYP / WRD) ----------------------------------------------------------------
     
-    TT_INT_TYP,
-    TT_DOUBLE_TYP,
-    TT_STR_TYP,
-    TT_BOOL_TYP,
-    TT_CHR_TYP,
-    TT_CONST_TYP,
+    MTT_INT_TYP,
+    MTT_DOUBLE_TYP,
+    MTT_STR_TYP,
+    MTT_BOOL_TYP,
+    MTT_CHR_TYP,
+    MTT_CONST_TYP,
 
     // Multiple chars symbols (SYM) ----------------------------------------------------------------
 
-    TT_IS_EQUAL_SYM,
-    TT_ASSIGN_SYM,
-    TT_GREATER_OR_EQU_SYM,
-    TT_LESS_OR_EQU_SYM,
+    MTT_IS_EQUAL_SYM,
+    MTT_ASSIGN_SYM,
+    MTT_GREATER_OR_EQU_SYM,
+    MTT_LESS_OR_EQU_SYM,
 
     // Statements (STMT) ----------------------------------------------------------------
 
-    TT_IF_STMT,
-    TT_ELSEIF_STMT,
-    TT_ELSE_STMT,
-    TT_DO_STMT,
-    TT_WHILE_STMT,
-    TT_FOR_STMT,
+    MTT_IF_STMT,
+    MTT_ELSEIF_STMT,
+    MTT_ELSE_STMT,
+    MTT_DO_STMT,
+    MTT_WHILE_STMT,
+    MTT_FOR_STMT,
 
     // Operators (OP) ----------------------------------------------------------------
 
-    TT_PLUS_OP,
-    TT_MINUS_OP,
-    TT_TIMES_OP,
-    TT_DIV_OP,
+    MTT_PLUS_OP,
+    MTT_MINUS_OP,
+    MTT_TIMES_OP,
+    MTT_DIV_OP
+} MultipleCharsTokenType;
 
-    // Digits
-    TT_CHAR_DGT,
-    TT_NUM_DGT
-} TokenType;
+// Type (enum) of all variable value token types
+typedef enum VariableValueTokenTypes {
+    VTT_CHAR,
+    VTT_NUM
+} VariableValueTokenType;
 
-// Content lists ----------------------------------------------------------------
+// Token type lists ----------------------------------------------------------------
 
-// List of all tokens types (matches the enum content)
-TokenType token_types_list[] = { 
-  TT_PAREN_OPEN_DELIM, TT_PAREN_CLOSE_DELIM, TT_STR_DELIM, TT_CHR_DELIM, TT_INDEX_OPEN_DELIM, TT_INDEX_CLOSE_DELIM, TT_FUNCTION_OPEN_DELIM, TT_FUNCTION_CLOSE_DELIM, TT_COMMENT_OPEN_DELIM, TT_COMMENT_CLOSE_DELIM, 
-  TT_PTR_SYM, TT_EOL_SYM, 
-  TT_INT_TYP, TT_DOUBLE_TYP, TT_STR_TYP, TT_BOOL_TYP, TT_CHR_TYP, TT_CONST_TYP,
-  TT_GREATER_SYM, TT_LESS_SYM, TT_IS_EQUAL_SYM, TT_ASSIGN_SYM, TT_GREATER_OR_EQU_SYM, TT_LESS_OR_EQU_SYM, 
-  TT_IF_STMT, TT_ELSEIF_STMT, TT_ELSE_STMT, TT_DO_STMT, TT_WHILE_STMT, TT_FOR_STMT,
-  TT_PLUS_OP, TT_MINUS_OP, TT_TIMES_OP, TT_DIV_OP,
-  TT_CHAR_DGT, TT_NUM_DGT
+// List of all single char token types
+SingleCharTokenType singleCharTokenTypes_list[] = {
+    STT_PAREN_OPEN_DELIM,
+    STT_PAREN_CLOSE_DELIM,
+    STT_STR_DELIM,
+    STT_CHR_DELIM,
+    STT_INDEX_OPEN_DELIM,
+    STT_INDEX_CLOSE_DELIM,
+    STT_FUNCTION_OPEN_DELIM,
+    STT_FUNCTION_CLOSE_DELIM,
+
+    STT_PTR_SYM,
+    STT_EOL_SYM,
+
+    STT_GREATER_SYM,
+    STT_LESS_SYM,
+    STT_FOR_STMT,
+
+    STT_PLUS_OP,
+    STT_MINUS_OP,
+    STT_TIMES_OP,
+    STT_DIV_OP
 };
 
-// List of all tokens
-std::string tokens_list[] = {
-  "(", ")", "\"", "'", "[", "]", "{", "}", "/*", "*/",
-  ".", ";",
-  "int", "double", "str", "bool", "chr", "const", 
-  ">", "<", "==", "<<", ">=", "<=", 
-  "if", "elseif", "else", "do", "while", "for",
-  "+", "-", "*", "/",
-  "", ""
+// List of all multiple chars token types
+MultipleCharsTokenType multipleCharsTokenTypes_list[] = {
+    MTT_COMMENT_OPEN_DELIM,
+    MTT_COMMENT_CLOSE_DELIM,
+
+    MTT_INT_TYP,
+    MTT_DOUBLE_TYP,
+    MTT_STR_TYP,
+    MTT_BOOL_TYP,
+    MTT_CHR_TYP,
+    MTT_CONST_TYP,
+
+    MTT_IS_EQUAL_SYM,
+    MTT_ASSIGN_SYM,
+    MTT_GREATER_OR_EQU_SYM,
+    MTT_LESS_OR_EQU_SYM,
+
+    MTT_IF_STMT,
+    MTT_ELSEIF_STMT,
+    MTT_ELSE_STMT,
+    MTT_DO_STMT,
+    MTT_WHILE_STMT,
+    MTT_FOR_STMT,
+
+    MTT_PLUS_OP,
+    MTT_MINUS_OP,
+    MTT_TIMES_OP,
+    MTT_DIV_OP
 };
 
+VariableValueTokenType variableValueTokenTypes_list[] = {
+    VTT_CHAR,
+    VTT_NUM
+};
+
+// Token lists ----------------------------------------------------------------
+
+std::string singleCharTokens_values_list[] = {
+  "(", ")", "\"", "'", "[", "]", "{", "}", ".", ";", ">", "<", "+", "-", "*", "/"
+};
+
+std::string multipleCharsTokens_values_list[] = {
+  "/*", "*/", "int", "double", "str", "bool", "chr", "const", "==", "<<", ">=", "<=", "if", "elseif", "else", "do", "while", "for"
+};
+
+std::string variableValueTokens_values_list[] = {
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIKJLMNOPQRSTUVWXYZ_", "0123456789"
+};
+
+// Token class (iterator) ----------------------------------------------------------------
 class Token {
     public:
         Token(std::string code) {
@@ -183,14 +174,6 @@ class Token {
 
         int getIndex() {
             return index;
-        }
-
-        TokenType getType() {
-            
-        }
-
-        char getValue() {
-            
         }
 
     private:
@@ -222,7 +205,11 @@ class Add
 // Function prototypes ----------------------------------------------------------------
 
 // Insert a single token at the end of token_match map
-void InsertToken(TokenType token_type, std::string token);
+void InsertToken(SingleCharTokenType token_type, std::string token);
+// Insert a single token at the end of token_match map
+void InsertToken(MultipleCharsTokenType token_type, std::string token);
+// Insert a single token at the end of token_match map
+void InsertToken(VariableValueTokenType token_type, std::string token);
 // Insert all tokens at the end of token_match map using InsertToken() function
 void InsertAllTokens();
 // Prints all tokens in token_match map
@@ -237,7 +224,11 @@ std::vector<std::string> split(std::string string_to_split, char delimiter);
 // Main variables declaration ----------------------------------------------------------------
 
 // Map of matches between token types and tokens
-std::map<TokenType, std::string> token_match;
+std::map<SingleCharTokenType, std::string> single_char_token_match;
+// Map of matches between token types and tokens
+std::map<MultipleCharsTokenType, std::string> multiple_chars_token_match;
+// Map of matches between token types and tokens
+std::map<VariableValueTokenType, std::string> variable_value_token_match;
 
 // Main function ----------------------------------------------------------------
 
@@ -251,28 +242,72 @@ int main()
 // Functions bodies ----------------------------------------------------------------
 
 // InsertToken
-void InsertToken(TokenType token_type, std::string token) {
-    token_match.insert(std::pair<TokenType, std::string>(token_type, token));
+void InsertToken(SingleCharTokenType token_type, std::string token) {
+    single_char_token_match.insert(std::pair<SingleCharTokenType, std::string>(token_type, token));
+}
+void InsertToken(MultipleCharsTokenType token_type, std::string token) {
+    multiple_chars_token_match.insert(std::pair<MultipleCharsTokenType, std::string>(token_type, token));
+}
+void InsertToken(VariableValueTokenType token_type, std::string token) {
+    variable_value_token_match.insert(std::pair<VariableValueTokenType, std::string>(token_type, token));
 }
 
 // InsertAllTokens
 void InsertAllTokens() {
-    for(int i = 0; i < sizeof(token_types_list) / sizeof(token_types_list[0]); i++) {
-        InsertToken(token_types_list[i], tokens_list[i]);
+    for(int i = 0; i < sizeof(singleCharTokenTypes_list) / sizeof(singleCharTokenTypes_list[0]); i++) {
+        InsertToken(singleCharTokenTypes_list[i], singleCharTokens_values_list[i]);
+    }
+    for(int i = 0; i < sizeof(multipleCharsTokenTypes_list) / sizeof(multipleCharsTokenTypes_list[0]); i++) {
+        InsertToken(multipleCharsTokenTypes_list[i], multipleCharsTokens_values_list[i]);
+    }
+    for(int i = 0; i < sizeof(variableValueTokenTypes_list) / sizeof(variableValueTokenTypes_list[0]); i++) {
+        InsertToken(variableValueTokenTypes_list[i], variableValueTokens_values_list[i]);
     }
 }
 
 // PrintTokens
 void PrintTokens() {
-    std::map<TokenType, std::string>::iterator itr;
-    for(itr=token_match.begin();itr!=token_match.end();itr++)
+    std::map<SingleCharTokenType, std::string>::iterator itr;
+    std::cout << "Single char tokens:" << std::endl;
+    for(itr=single_char_token_match.begin();itr!=single_char_token_match.end();itr++)
     {
         std::cout<<itr->first<<" "<<itr->second<<std::endl;
     }
+    std::map<MultipleCharsTokenType, std::string>::iterator jtr;
+    std::cout << "Multiple chars tokens:" << std::endl;
+    for(jtr=multiple_chars_token_match.begin();jtr!=multiple_chars_token_match.end();jtr++)
+    {
+        std::cout<<jtr->first<<" "<<jtr->second<<std::endl;
+    }
+    std::map<SingleCharTokenType, std::string>::iterator ktr;
+    std::cout << "Variable value tokens:" << std::endl;
+    for(ktr=single_char_token_match.begin();ktr!=single_char_token_match.end();ktr++)
+    {
+        std::cout<<ktr->first<<" "<<ktr->second<<std::endl;
+    }
 }
-
-void TokenizeCode(std::string code) {
-    std::vector<TokenType> code_tokens;
+void PrintTokens(std::string token_class) {
+    if(token_class == "single_char") {
+        std::map<SingleCharTokenType, std::string>::iterator itr;
+        for(itr=single_char_token_match.begin();itr!=single_char_token_match.end();itr++)
+        {
+            std::cout<<itr->first<<" "<<itr->second<<std::endl;
+        }
+    }
+    else if(token_class == "multiple_chars") {
+        std::map<MultipleCharsTokenType, std::string>::iterator jtr;
+        for(jtr=multiple_chars_token_match.begin();jtr!=multiple_chars_token_match.end();itr++)
+        {
+            std::cout<<jtr->first<<" "<<itr->second<<std::endl;
+        }
+    }
+    else if(token_class == "variable_value") {
+        std::map<SingleCharTokenType, std::string>::iterator itr;
+        for(itr=single_char_token_match.begin();itr!=single_char_token_match.end();itr++)
+        {
+            std::cout<<itr->first<<" "<<itr->second<<std::endl;
+        }
+    }
 }
 
 // split with string
