@@ -11,8 +11,8 @@ You can find its documentation [here](https://github.com/Ice-Code-Team/shard-lan
 ## Roadmap
 
 - [ ] Tokenizer
-- [ ] File-based input (for interpreter)
-- [x] Console-based input (for interpreter)
+- [ ] File-based input (for compiler)
+- [x] Console-based input (for compiler)
 - [ ] Variables
 - [ ] Constants
 - [ ] Pointers
