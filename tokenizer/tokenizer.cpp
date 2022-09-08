@@ -206,55 +206,63 @@ class Token {
     public:
         Token(std::string code) {
             code_to_tokenize = split(code, ' ');
-            index = 0;
         }
 
         void run() {
-            for(int i = 0; i < code_to_tokenize.size(); i++) {
-                std::string tokenizing = code_to_tokenize[i];
-                if(tokenizing.size() == 1) {
-                    int temp = all_tokens.size();
-                    get_singlechar_token(tokenizing[0]);
-                    if(all_tokens.size() == temp) {
-                        get_variablevalue_token(tokenizing[0]);
-                    }
-                }
-                else {
-                    int temp = all_tokens.size();
-                    get_multiplechars_token();
-                    if(all_tokens.size() == temp) {
-                        for(int j = 0; j < code_to_tokenize[i].size(); j++) {
-                            get_singlechar_token(tokenizing[j]);
+            try {
+                for(int i = 0; i < code_to_tokenize.size(); i++) {
+                    std::string tokenizing = code_to_tokenize[i];
+                    std::cout << "............" << std::endl << code_to_tokenize[i] << std::endl;
+                    if(tokenizing.size() == 1) {
+                        std::cout << "Single char" << std::endl;
+                        int temp = all_tokens.size();
+                        get_singlechar_token(tokenizing[0]);
+                        if(all_tokens.size() == temp) {
+                            get_variablevalue_token(tokenizing[0]);
+                            continue;
                         }
                     }
                     else {
-                        std::cout << "General failure" << std::endl;
-                        i++;
+                        std::cout << "Multiple chars" << std::endl;
+                        int temp = all_tokens.size();
+                        get_multiplechars_token(i);
+                        if(all_tokens.size() == temp) {
+                            std::cout << "Variable value" << std::endl;
+                            for(int j = 0; j < code_to_tokenize[i].size(); j++) {
+                                get_variablevalue_token(tokenizing[j]);
+                            }
+                        }
                     }
                 }
+            }
+            catch(const std::exception& e) {
+                std::cerr << e.what() << '\n';
             }
         }
 
         void get_singlechar_token(char tok) {
-            for(int i = 0; i < sizeof(singleCharTokenTypes_list); i++) {
-                if(tok == singleCharTokens_values_list[i][0]) {
-                    all_tokens.insert(all_tokens.end(), singleCharTokenTypes_list[i]);
+            for(int j = 0; j < sizeof(singleCharTokenTypes_list); j++) {
+                if(tok == singleCharTokens_values_list[j][0]) {
+                    all_tokens.insert(all_tokens.end(), singleCharTokenTypes_list[j]);
+                    std::cout << "Added to singlechar token list" << singleCharTokens_values_list[j] << std::endl;
                 }
             }
         }
 
-        void get_multiplechars_token() {
-            for(int i = 0; i < sizeof(multipleCharsTokenTypes_list); i++) {
-                if(code_to_tokenize[index] == multipleCharsTokens_values_list[i]) {
-                    all_tokens.insert(all_tokens.end(), multipleCharsTokenTypes_list[i]);
+        void get_multiplechars_token(int i) {
+            for(int j = 0; j < sizeof(multipleCharsTokenTypes_list); j++) {
+                if(code_to_tokenize[i] == multipleCharsTokens_values_list[j]) {
+                    all_tokens.insert(all_tokens.end(), multipleCharsTokenTypes_list[j]);
+                    std::cout << "Added to multiplechars token list" << multipleCharsTokens_values_list[j] << std::endl;
                 }
             }
         }
 
         void get_variablevalue_token(char tok) {
-            for(int i = 0; i < sizeof(variableValueTokenTypes_list); i++) {
-                if(in(tok, variableValueTokens_values_list[i])) {
-                    all_tokens.insert(all_tokens.end(), variableValueTokenTypes_list[i]);
+            for(int j = 0; j < sizeof(variableValueTokenTypes_list); j++) {
+                if(in(tok, variableValueTokens_values_list[j])) {
+                    all_tokens.insert(all_tokens.end(), variableValueTokenTypes_list[j]);
+                    std::cout << "Added to variablevalue token list" << variableValueTokens_values_list[j] << std::endl;
                 }
             }
         }
@@ -284,8 +292,6 @@ class Token {
     private:
         // The code to tokenize
         std::vector<std::string> code_to_tokenize;
-        // The index of the code actually being tokenized
-        int index;
         // The vector of all tokens found
         std::vector<std::variant<SingleCharTokenType, MultipleCharsTokenType, VariableValueTokenType>> all_tokens;
 };
@@ -422,13 +428,14 @@ std::vector<std::string> split(std::string string_to_split, char delimiter) {
     for(int i = 0; i < string_to_split.length(); i++) {
         if(string_to_split[i] == delimiter) {
             splitted_string.push_back(temp);
-            std::cout << "Added : " << temp << std::endl;
+            std::cout << "Added : \"" << temp << "\"" << std::endl;
             temp = "";
         } else {
             temp += string_to_split[i];
         }
     }
     splitted_string.push_back(temp);
+    std::cout << "Added : \"" << temp << "\"" << std::endl;
     while(splitted_string[splitted_string.size() - 1] == "") {
         splitted_string.pop_back();
     }
