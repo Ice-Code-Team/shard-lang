@@ -1,4 +1,17 @@
-# Shard Programming Language
+<div align="center">
+  <p>
+    <img width="80" src="https://avatars.githubusercontent.com/u/99663083?v=4">
+  </p>
+  <h1>The Shard Programming Language</h1>
+</div>
+
+![shield](https://img.shields.io/badge/version-ALPHA-ff0000)
+![shield](https://img.shields.io/github/repo-size/Ice-Code-Team/shard-lang)
+![shield](https://img.shields.io/badge/Status-In%20Progress-00ff00)
+![shield](https://img.shields.io/badge/Made%20in-C++-00599C?logo=cplusplus)
+![shield](https://img.shields.io/badge/Supported%20Platforms-Windows%20%7C%20Linux%20%7C%20MacOS-blue)
+![shield](https://img.shields.io/badge/By-Ice%20Code%20Team-00cfff)
+
 
 ## Description
 
@@ -10,9 +23,13 @@ You can find its documentation [here](https://github.com/Ice-Code-Team/shard-lan
 
 ## Roadmap
 
-- [ ] Tokenizer
-- [ ] File-based input (for compiler)
-- [x] Console-based input (for compiler)
+- [ ] Compiler Configuration
+  - [ ] Lexer
+  - [ ] Parser
+  - [ ] Compiler
+- [ ] Compiler Inputs
+  - [ ] File-based input
+  - [x] Console-based input
 - [ ] Variables
 - [ ] Constants
 - [ ] Pointers
