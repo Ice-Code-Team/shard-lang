@@ -5,13 +5,12 @@
   <h1>The Shard Programming Language</h1>
 </div>
 
-![shield](https://img.shields.io/badge/version-ALPHA-ff0000)
+![shield](https://img.shields.io/badge/version-ALPHA-524fff)
 ![shield](https://img.shields.io/github/repo-size/Ice-Code-Team/shard-lang)
-![shield](https://img.shields.io/badge/Status-In%20Progress-00ff00)
+![shield](https://img.shields.io/badge/Status-In%20Progress-7aff7a)
 ![shield](https://img.shields.io/badge/Made%20in-C++-00599C?logo=cplusplus)
 ![shield](https://img.shields.io/badge/Supported%20Platforms-Windows%20%7C%20Linux%20%7C%20MacOS-blue)
-![shield](https://img.shields.io/badge/By-Ice%20Code%20Team-00cfff)
-
+![shield](https://img.shields.io/badge/stable-NO-ff4f4f)
 
 ## Description
 
@@ -30,12 +29,14 @@ You can find its documentation [here](https://github.com/Ice-Code-Team/shard-lan
 - [ ] Compiler Inputs
   - [ ] File-based input
   - [x] Console-based input
-- [ ] Variables
-- [ ] Constants
-- [ ] Pointers
-- [ ] Arrays
-- [ ] Untyped variants
-- [ ] Basic Input/Output System
-- [ ] Directory/Files System
-- [ ] If, elsif and else statements
-- [ ] Loops (for, while, do while)
+- [ ] Basic Language Features
+  - [ ] Variables
+  - [ ] Constants
+  - [ ] Pointers
+  - [ ] Arrays
+  - [ ] If, elsif and else statements
+  - [ ] Loops (for, while, do while)
+- [ ] System Packages
+  - [ ] Basic Input/Output
+  - [ ] Directory/Files System
+  - [ ] Untyped variants
