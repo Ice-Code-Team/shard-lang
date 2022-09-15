@@ -1,5 +1,7 @@
 /*
-> Test
+ > Code by Ice Code Team
+ > Shard lang
+ > https://github.com/Ice-Code-Team/shard-lang
 */
 
 #include <iostream>
