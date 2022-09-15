@@ -59,6 +59,7 @@ typedef enum MultipleCharsTokenTypes {
     MTT_BOOL_TYP,
     MTT_CHR_TYP,
     MTT_CONST_TYP,
+    MTT_UNTYPED_TYP,
 
     // Multiple chars symbols (SYM) ----------------------------------------------------------------
 
@@ -154,7 +155,7 @@ std::string singleCharTokens_values_list[] = {
 };
 
 std::string multipleCharsTokens_values_list[] = {
-  "/*", "*/", "int", "double", "str", "bool", "chr", "const", "==", "<<", ">=", "<=", "if", "elseif", "else", "do", "while", "for"
+  "/*", "*/", "int", "double", "str", "bool", "chr", "const", "idf","==", "<<", ">=", "<=", "if", "elseif", "else", "do", "while", "for"
 };
 
 std::string variableValueTokens_values_list[] = {
