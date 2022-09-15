@@ -34,9 +34,11 @@ You can find its documentation [here](https://github.com/Ice-Code-Team/shard-lan
   - [ ] Constants
   - [ ] Pointers
   - [ ] Arrays
+  - [ ] Untyped variants
   - [ ] If, elsif and else statements
   - [ ] Loops (for, while, do while)
+  - [ ] OOP Features
 - [ ] System Packages
   - [ ] Basic Input/Output
-  - [ ] Directory/Files System
-  - [ ] Untyped variants
+  - [ ] OS Interactions
+  - [ ] ...
