@@ -220,7 +220,7 @@ class Token {
             try {
                 for(int i = 0; i < code_to_tokenize.size(); i++) {
                     std::string tokenizing = code_to_tokenize[i];
-                    std::cout << "............" << std::endl << code_to_tokenize[i] << std::endl;
+                    std::cout << "............" << std::endl << tokenizing << std::endl;
                     if(tokenizing.size() == 1) {
                         int temp = all_tokens.size();
                         get_singlechar_token(tokenizing[0]);
@@ -237,11 +237,12 @@ class Token {
                         get_multiplechars_token(i);
                         if(all_tokens.size() == temp) {
                             std::cout << "Variable value" << std::endl;
-                            for(int j = 0; j < code_to_tokenize[i].size(); j++) {
+                            for(int j = 0; j < tokenizing.size(); j++) {
                                 get_variablevalue_token(tokenizing[j]);
                             }
                         }
                     }
+                    std::cout << "OK " << tokenizing << std::endl;
                 }
             }
             catch(const std::exception& e) {
@@ -250,28 +251,31 @@ class Token {
         }
 
         void get_singlechar_token(char tok) {
-            for(int j = 0; j < sizeof(singleCharTokenTypes_list); j++) {
-                if(tok == singleCharTokens_values_list[j][0]) {
-                    all_tokens.insert(all_tokens.end(), singleCharTokenTypes_list[j]);
-                    std::cout << "Added to singlechar token list " << singleCharTokens_values_list[j] << std::endl;
+            for(int i_singlechar = 0; i_singlechar < sizeof(singleCharTokens_values_list); i_singlechar++) {
+                if(tok == singleCharTokens_values_list[i_singlechar][0]) {
+                    all_tokens.insert(all_tokens.end(), singleCharTokenTypes_list[i_singlechar]);
+                    std::cout << "Added to singlechar token list " << singleCharTokens_values_list[i_singlechar] << std::endl;
+                    return;
                 }
             }
         }
 
         void get_multiplechars_token(int i) {
-            for(int j = 0; j < sizeof(multipleCharsTokenTypes_list); j++) {
-                if(code_to_tokenize[i] == multipleCharsTokens_values_list[j]) {
-                    all_tokens.insert(all_tokens.end(), multipleCharsTokenTypes_list[j]);
-                    std::cout << "Added to multiplechars token list " << multipleCharsTokens_values_list[j] << std::endl;
+            for(int i_multiplechars = 0; i_multiplechars < sizeof(multipleCharsTokens_values_list); i_multiplechars++) {
+                if(code_to_tokenize[i] == multipleCharsTokens_values_list[i_multiplechars]) {
+                    all_tokens.insert(all_tokens.end(), multipleCharsTokenTypes_list[i_multiplechars]);
+                    std::cout << "Added to multiplechars token list " << multipleCharsTokens_values_list[i_multiplechars] << std::endl;
+                    return;
                 }
             }
         }
 
         void get_variablevalue_token(char tok) {
-            for(int j = 0; j < sizeof(variableValueTokenTypes_list); j++) {
-                if(in(tok, variableValueTokens_values_list[j])) {
-                    all_tokens.insert(all_tokens.end(), variableValueTokenTypes_list[j]);
-                    std::cout << "Added to variablevalue token list " << variableValueTokens_values_list[j] << std::endl;
+            for(int i_variablevalue = 0; i_variablevalue < sizeof(variableValueTokens_values_list); i_variablevalue++) {
+                if(in(tok, variableValueTokens_values_list[i_variablevalue])) {
+                    all_tokens.insert(all_tokens.end(), variableValueTokenTypes_list[i_variablevalue]);
+                    std::cout << "Added to variablevalue token list " << variableValueTokens_values_list[i_variablevalue] << std::endl;
+                    return;
                 }
             }
         }
@@ -320,7 +324,7 @@ int main()
 {
     InsertAllTokens();
     // PrintTokens();
-    TokenizeCode("int a << 5");
+    TokenizeCode("int a + 8");
     std::cout << "Tokenizing code finished" << std::endl;
     return 0;
 }
