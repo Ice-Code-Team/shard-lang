@@ -11,6 +11,8 @@
 #include <map>
 #include <variant>
 
+#include "utils.h"
+
 // Types (enums) of all token types
 
 // Type (enum) of all single char token types
@@ -88,7 +90,7 @@ typedef enum MultipleCharsTokenTypes {
 
 // Type (enum) of all variable value token types
 typedef enum VariableValueTokenTypes {
-    VTT_CHAR,
+    VTT_WORD,
     VTT_NUM
 } VariableValueTokenType;
 
@@ -145,7 +147,7 @@ MultipleCharsTokenType multipleCharsTokenTypes_list[] = {
 
 // List of all variable value token types
 VariableValueTokenType variableValueTokenTypes_list[] = {
-    VTT_CHAR,
+    VTT_WORD,
     VTT_NUM
 };
 
@@ -163,24 +165,12 @@ std::string variableValueTokens_values_list[] = {
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIKJLMNOPQRSTUVWXYZ_", "0123456789"
 };
 
+std::vector<std::string> variableValueTokens_values_used_strings_list = {};
+std::vector<int> variableValueTokens_values_used_numbers_list = {};
+
 // Token Combinations ----------------------------------------------------------------
 
-// Math --------------------------------
-
-class Add
-{
-    public:
-        Add(std::string num1, std::string num2) {
-            operato = '+';
-            delimiter = ',';
-        }
-    private:
-        char operato;
-        char delimiter;
-        int num1, dec1;
-        int num2, dec2;
-
-};
+// SOON
 
 // Function prototypes ----------------------------------------------------------------
 
@@ -198,51 +188,33 @@ void PrintTokens();
 void PrintTokens(std::string token_class);
 // Tokenize and go along the code
 void TokenizeCode(std::string code);
-// Splits a string into a vector of strings with a defined string delimiter
-std::vector<std::string> split(std::string string_to_split, std::string delimiter);
-// Splits a string into a vector of strings with a defined char delimiter
-std::vector<std::string> split(std::string string_to_split, char delimiter);
-// Checks if a substring is in a string
-bool in(std::string substring_to_check, std::string string_to_check_in);
-// Checks if a char is in a string
-bool in(char char_to_check, std::string string_to_check_in);
-// Removes a given string from a vector of strings
-std::vector<std::string> RemoveValue(std::vector<std::string> vector_to_remove_from, std::string value_to_remove);
 
 // Token class (for iteration) ----------------------------------------------------------------
 class Token {
     public:
         Token(std::string code) {
             code_to_tokenize = split(code, ' ');
+            std::vector<std::variant<SingleCharTokenType, MultipleCharsTokenType, VariableValueTokenType>> all_tokens = {};
         }
 
         void run() {
             try {
                 for(int i = 0; i < code_to_tokenize.size(); i++) {
                     std::string tokenizing = code_to_tokenize[i];
-                    std::cout << "............" << std::endl << tokenizing << std::endl;
-                    if(tokenizing.size() == 1) {
-                        int temp = all_tokens.size();
-                        get_singlechar_token(tokenizing[0]);
-                        if(all_tokens.size() == temp) {
-                            get_variablevalue_token(tokenizing[0]);
-                            std::cout << "Variable value" << std::endl;
-                            continue;
+                    int temp = all_tokens.size();
+                    std::cout << temp << std::endl;
+                    if(sizeof(tokenizing) == 1) {
+                        get_singlechar_token(tokenizing);
+                        if(temp == all_tokens.size()) {
+                            get_variablevalue_token(tokenizing);
                         }
-                        std::cout << "Single char" << std::endl;
                     }
                     else {
-                        std::cout << "Multiple chars" << std::endl;
-                        int temp = all_tokens.size();
-                        get_multiplechars_token(i);
-                        if(all_tokens.size() == temp) {
-                            std::cout << "Variable value" << std::endl;
-                            for(int j = 0; j < tokenizing.size(); j++) {
-                                get_variablevalue_token(tokenizing[j]);
-                            }
+                        get_multiplechars_token(tokenizing);
+                        if(temp == all_tokens.size()) {
+                            get_variablevalue_token(tokenizing);
                         }
                     }
-                    std::cout << "OK " << tokenizing << std::endl;
                 }
             }
             catch(const std::exception& e) {
@@ -250,19 +222,20 @@ class Token {
             }
         }
 
-        void get_singlechar_token(char tok) {
+        void get_singlechar_token(std::string tok) {
             for(int i_singlechar = 0; i_singlechar < sizeof(singleCharTokens_values_list); i_singlechar++) {
-                if(tok == singleCharTokens_values_list[i_singlechar][0]) {
+                std::cout << "Comparing " << tok << " with " << singleCharTokens_values_list[i_singlechar] << std::endl;
+                if(tok == singleCharTokens_values_list[i_singlechar]) {
                     all_tokens.insert(all_tokens.end(), singleCharTokenTypes_list[i_singlechar]);
-                    std::cout << "Added to singlechar token list " << singleCharTokens_values_list[i_singlechar] << std::endl;
+                    std::cout << "Added " << tok << " = " << singleCharTokens_values_list[i_singlechar][0] << " to singlechar token list " << singleCharTokens_values_list[i_singlechar] << std::endl;
                     return;
                 }
             }
         }
 
-        void get_multiplechars_token(int i) {
+        void get_multiplechars_token(std::string tok) {
             for(int i_multiplechars = 0; i_multiplechars < sizeof(multipleCharsTokens_values_list); i_multiplechars++) {
-                if(code_to_tokenize[i] == multipleCharsTokens_values_list[i_multiplechars]) {
+                if(tok == multipleCharsTokens_values_list[i_multiplechars]) {
                     all_tokens.insert(all_tokens.end(), multipleCharsTokenTypes_list[i_multiplechars]);
                     std::cout << "Added to multiplechars token list " << multipleCharsTokens_values_list[i_multiplechars] << std::endl;
                     return;
@@ -270,13 +243,22 @@ class Token {
             }
         }
 
-        void get_variablevalue_token(char tok) {
-            for(int i_variablevalue = 0; i_variablevalue < sizeof(variableValueTokens_values_list); i_variablevalue++) {
-                if(in(tok, variableValueTokens_values_list[i_variablevalue])) {
-                    all_tokens.insert(all_tokens.end(), variableValueTokenTypes_list[i_variablevalue]);
-                    std::cout << "Added to variablevalue token list " << variableValueTokens_values_list[i_variablevalue] << std::endl;
-                    return;
-                }
+        void get_variablevalue_token(std::string tok) {
+            if(isNumber(tok)) {
+                all_tokens.insert(all_tokens.end(), VTT_NUM);
+                variableValueTokens_values_used_numbers_list.insert(variableValueTokens_values_used_numbers_list.end(), std::stoi(tok));
+                std::cout << "Added to variablevalue token list " << tok << std::endl;
+                return;
+            }
+            else if(isWord(tok)) {
+                all_tokens.insert(all_tokens.end(), VTT_WORD);
+                variableValueTokens_values_used_strings_list.insert(variableValueTokens_values_used_strings_list.end(), tok);
+                std::cout << "Added to variablevalue token list " << tok << std::endl;
+                return;
+            }
+            else {
+                std::cout << "Error: " << tok << " is not a valid variable value token" << std::endl;
+                return;
             }
         }
 
@@ -324,7 +306,7 @@ int main()
 {
     InsertAllTokens();
     // PrintTokens();
-    TokenizeCode("int a + 8");
+    TokenizeCode("int a << 8");
     std::cout << "Tokenizing code finished" << std::endl;
     return 0;
 }
@@ -410,65 +392,4 @@ void TokenizeCode(std::string code) {
         tkn.run();
         tkn.print_tokens();
     }
-}
-
-// split with string
-std::vector<std::string> split(std::string string_to_split, std::string delimiter) {
-    std::vector<std::string> splitted_string;
-    int index = 0;
-    int delimiter_index = 0;
-    while (true) {
-        delimiter_index = string_to_split.find(delimiter, index);
-        if (delimiter_index == std::string::npos) {
-            splitted_string.push_back(string_to_split.substr(index, string_to_split.size() - index));
-            break;
-        }
-        else {
-            splitted_string.push_back(string_to_split.substr(index, delimiter_index - index));
-            index = delimiter_index + delimiter.size();
-        }
-    }
-    std::string* final_string = &splitted_string[0];
-    return splitted_string;
-}
-
-// split with char
-std::vector<std::string> split(std::string string_to_split, char delimiter) {
-    std::vector<std::string> splitted_string;
-    std::string temp = "";
-    for(int i = 0; i < string_to_split.length(); i++) {
-        if(string_to_split[i] == delimiter) {
-            splitted_string.push_back(temp);
-            temp = "";
-        } else {
-            temp += string_to_split[i];
-        }
-    }
-    splitted_string.push_back(temp);
-    while(splitted_string[splitted_string.size() - 1] == "") {
-        splitted_string.pop_back();
-    }
-    splitted_string = RemoveValue(splitted_string, std::string(1, delimiter));
-    return splitted_string;
-}
-
-// in (string)
-bool in(std::string substring_to_check, std::string string_to_check_in) {
-    return string_to_check_in.find(substring_to_check) != std::string::npos;
-}
-
-// in (char)
-bool in(char char_to_check, std::string string_to_check_in) {
-    return string_to_check_in.find(char_to_check) != std::string::npos;
-}
-
-// RemoveValue
-std::vector<std::string> RemoveValue(std::vector<std::string> vector_to_remove_from, std::string value_to_remove) {
-    std::vector<std::string> vector_removed;
-    for(int i = 0; i < vector_to_remove_from.size(); i++) {
-        if(vector_to_remove_from[i] != value_to_remove && vector_to_remove_from[i] != "") {
-            vector_removed.push_back(vector_to_remove_from[i]);
-        }
-    }
-    return vector_removed;
 }
