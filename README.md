@@ -3,6 +3,9 @@
     <img width="80" src="https://avatars.githubusercontent.com/u/99663083?v=4">
   </p>
   <h1>The Shard Programming Language</h1>
+  <h1>
+    <a href="https://github.com/LilTim0/y-lang">The project has been moved here</a>
+  </h1>
 </div>
 
 ![shield](https://img.shields.io/badge/version-ALPHA-524fff)
